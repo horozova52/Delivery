@@ -1,0 +1,40 @@
+﻿@page "/login"
+@using Delivery.Shared.Entities
+<h3>Login</h3>
+
+<EditForm Model="@credentials" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label for="email">Email</label>
+        <InputText id="email" class="form-control" @bind-Value="credentials.Email" />
+    </div>
+
+    <div class="mb-3">
+        <label for="password">Password</label>
+        <InputText id="password" type="password" class="form-control" @bind-Value="credentials.Password" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+</EditForm>
+
+@code {
+    private LoginModel credentials = new LoginModel();
+
+    private async Task HandleLogin()
+    {
+        // Example: Sending POST request to API endpoint for login
+        var response = await Http.PostAsJsonAsync("api/Users/login", credentials);
+        if (response.IsSuccessStatusCode)
+        {
+            // Handle success (e.g., save token, redirect, etc.)
+        }
+        else
+        {
+            // Handle error (e.g., show error message)
+        }
+    }
+
+    [Inject] private HttpClient Http { get; set; }
+}

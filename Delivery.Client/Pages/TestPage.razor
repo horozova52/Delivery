@@ -1,0 +1,25 @@
+﻿@page "/test"
+@inject HttpClient Http
+
+<h3>Test API Connection</h3>
+
+<button @onclick="GetWeatherData">Get Weather Data</button>
+
+<p>@result</p>
+
+@code {
+    private string result;
+
+    private async Task GetWeatherData()
+    {
+        try
+        {
+            var response = await Http.GetStringAsync("weatherforecast");
+            result = response;
+        }
+        catch (Exception ex)
+        {
+            result = $"Error: {ex.Message}";
+        }
+    }
+}
